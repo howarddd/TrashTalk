@@ -58,5 +58,6 @@ class Schedule(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/event', handlers.EventHandler),
+    ('/event_single/(\d+)', handlers.EventHandlerSingle),
     ('/schedule', Schedule),
 ], debug=True)

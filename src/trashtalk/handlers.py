@@ -18,7 +18,7 @@ def address_to_latlong(street, zip, town, state):
   return geo_handler.get_lat_long(addr_str)
 
 
-def date_serializer(obj):
+def date_and_location_serializer(obj):
   """JSON serializer for objects not serializable by default json code"""
 
   if isinstance(obj, datetime.datetime):
@@ -37,7 +37,7 @@ class EventHandler(webapp2.RequestHandler):
     self.response.write(
       json.dumps(
         [e.to_dict() for e in events],
-        default=date_serializer
+        default=date_and_location_serializer
       )
     )
 
@@ -50,6 +50,7 @@ class EventHandler(webapp2.RequestHandler):
     description = self.request.get('description')
     category = self.request.get('category')
     scheduled_date = self.request.get('scheduled_date')  # TODO: parse this and make it required
+    summary = self.request.get('summary')
     address_street = self.request.get('address_street')
     address_zip = self.request.get('address_zip')
     address_town = self.request.get('address_town')
@@ -58,7 +59,7 @@ class EventHandler(webapp2.RequestHandler):
     longitude = self.request.get('longitude')
 
     # Validate the input
-    required = [user_email, scf_username, scf_password, name, category]
+    required = [user_email, scf_username, scf_password, name, category, summary]
     if not all(required):
       raise webapp2.exc.HTTPBadRequest('missing required fields')
     has_full_address = address_state and address_street and address_zip and address_town
@@ -86,8 +87,15 @@ class EventHandler(webapp2.RequestHandler):
 
     new_event = models.Event(
       name=name, description=description, category=category, creator=event_creator,
-      address=address, location=location
+      address=address, location=location, summary=summary
     )
     new_event.put()
 
     self.response.write('OK')  # TODO: This sends out a 200, right?
+
+
+class EventHandlerSingle(webapp2.RequestHandler):
+  def get(self, event_id):
+    event_id = int(event_id)
+    event = ndb.Key(models.Event, event_id).get()
+    self.response.write(json.dumps(event.to_dict(), default=date_and_location_serializer))
