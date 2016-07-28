@@ -61,10 +61,9 @@ class EventHandler(webapp2.RequestHandler):
     required = [user_email, scf_username, scf_password, name, category]
     if not all(required):
       raise webapp2.exc.HTTPBadRequest('missing required fields')
-    has_exact_location = latitude and longitude
     has_full_address = address_state and address_street and address_zip and address_town
-    if not (has_exact_location or has_full_address):
-      raise webapp2.exc.HTTPBadRequest('missing exact location or full address')
+    if not has_full_address:
+      raise webapp2.exc.HTTPBadRequest('need a full address')
     user = users.get_current_user()
     if not user:
       raise webapp2.exc.HTTPUnauthorized('no user is authenticated')
@@ -76,15 +75,13 @@ class EventHandler(webapp2.RequestHandler):
       seeclickfix_username=scf_username,
       seeclickfix_password=scf_password
     )
-    address = None
-    if has_full_address:
-      address = models.Address(
-        street=address_street, zip=address_zip, town=address_town, state=address_town
-      )
-    if has_exact_location:
+    address = models.Address(
+      street=address_street, zip=address_zip, town=address_town, state=address_town
+    )
+    if latitude and longitude:
       location = ndb.GeoPt(latitude, longitude)
     else:
-      latitutde, longitude = address_to_latlong(address_street, address_zip, address_town, address_state)
+      latitude, longitude = address_to_latlong(address_street, address_zip, address_town, address_state)
       location = ndb.GeoPt(latitude, longitude)
 
     new_event = models.Event(
