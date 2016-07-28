@@ -26,3 +26,7 @@ latitude
 longitude
 the POST request either needs lat/long, or all of the address fields, or both
 - /event_single/{id} - a GET request to this returns the data for a single event. Requires the event id
+
+#Things to Note
+- On /schedules you'll get an error if you give an incorrect location (e.g. incorrect zipcode) 
+- On /schedules you'll get an error if you give an incorrect SeeClickFix user/pass
