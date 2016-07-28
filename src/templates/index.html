@@ -22,38 +22,20 @@
 
   <section class="soft-quad" id="cleanups">
     <h1 class="push--bottom">Cleanups</h1>
-    <div class="flex flex-align--center border--all soft-double push--bottom">
-      <div class="flex--1">
-        <h3 class="weight--bold">Cleanup Title</h3>
-        <div>122 Main St, Oakland, CA</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget ultricies metus. Aenean id sagittis mi. Sed eu sem nisi. Vivamus consectetur purus sed tristique auctor.</div>
-      </div>
-      <div class="push--left">8:00am May 16, 2016</div>
-    </div>
-    <div class="flex flex-align--center border--all soft-double push--bottom">
-      <div class="flex--1">
-        <h3 class="weight--bold">Cleanup Title</h3>
-        <div>122 Main St, Oakland, CA</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget ultricies metus. Aenean id sagittis mi. Sed eu sem nisi. Vivamus consectetur purus sed tristique auctor.</div>
-      </div>
-      <div class="push--left">8:00am May 16, 2016</div>
-    </div>
-    <div class="flex flex-align--center border--all soft-double push--bottom">
-      <div class="flex--1">
-        <h3 class="weight--bold">Cleanup Title</h3>
-        <div>122 Main St, Oakland, CA</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget ultricies metus. Aenean id sagittis mi. Sed eu sem nisi. Vivamus consectetur purus sed tristique auctor.</div>
-      </div>
-      <div class="push--left">8:00am May 16, 2016</div>
-    </div>
-    <div class="flex flex-align--center border--all soft-double push--bottom">
-      <div class="flex--1">
-        <h3 class="weight--bold">Cleanup Title</h3>
-        <div>122 Main St, Oakland, CA</div>
-        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget ultricies metus. Aenean id sagittis mi. Sed eu sem nisi. Vivamus consectetur purus sed tristique auctor.</div>
-      </div>
-      <div class="push--left">8:00am May 16, 2016</div>
-    </div>
+    {% if events %}
+      {% for event in events %}
+        <div class="flex flex-align--center border--all soft-double push--bottom">
+          <div class="flex--1">
+            <h3 class="weight--bold">{{ event.name }}</h3>
+            <div>{{ event.address.street }}, {{ event.address.town }}, {{ event.address.state}} {{ event.address.zip}}</div>
+            <div>{{ event.address.street }}</div>
+          </div>
+          <div class="push--left">{{ event.created_at }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div>No Events Found</div>
+    {% endif %}
   </section>
 
 </body>

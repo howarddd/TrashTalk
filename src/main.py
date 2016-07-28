@@ -4,6 +4,7 @@ from trashtalk import handlers
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from trashtalk import models
 
 import jinja2
 import webapp2
@@ -27,9 +28,12 @@ class Home(webapp2.RequestHandler):
             auth_url = users.create_login_url(self.request.uri)
             auth_text = 'Sign In'
 
+        events = models.Event.query().fetch()
+
         template_values = {
             'auth_url': auth_url,
             'auth_text': auth_text,
+            'events': events,
         }
 
         template = JINJA_ENVIRONMENT.get_template('./templates/index.html')
@@ -45,6 +49,7 @@ class Schedule(webapp2.RequestHandler):
         else:
             auth_url = users.create_login_url(self.request.uri)
             auth_text = 'Sign In'
+            self.redirect(auth_url)
 
         template_values = {
             'auth_url': auth_url,
