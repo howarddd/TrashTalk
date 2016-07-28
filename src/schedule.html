@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://oui.cdn.optimizely.com/13.1.0/oui.css">
+  <link rel="stylesheet" href="frontend/css/style.css">
+</head>
+<body>
+  <header class="flex soft-double soft-quad--sides flex-align--center">
+    <h2 class="flex--1"><a href="#">Trash Talk</a></h2>
+    <button class="button">Sign In</button>
+  </header>
+
+  <section class="soft-quad">
+    <h1 class="push--bottom">Schedule a Cleanup</h1>
+    <form class="flex flex-align--center border--all soft-double push--bottom">
+      <fieldset>
+        <ol class="form-fields">
+          <li class="form-field__item">
+            <label class="label">Type</label>
+            <select name="zoo" id="zoo" class="select">
+              <option value="cleanup">Cleanup</option>
+              <option value="meeting">Meeting</option>
+              <option value="other">Other</option>
+            </select>
+          </li>
+          <li class="form-field__item">
+            <label class="label">Fixed-width Input</label>
+            <input type="text" class="text-input width-150">
+          </li>
+          <li class="form-field__item">
+            <label class="label">Fixed-width Input</label>
+            <input type="text" class="text-input width-250">
+          </li>
+          <li class="form-field__item">
+            <div class="grid">
+              <div class="grid__cell">
+                <label class="label">Date</label>
+                <input type="text" class="text-input" placeholder="This is placeholder">
+              </div>
+              <div class="grid__cell">
+                <label class="label">Time</label>
+                <select name="zoo" id="zoo" class="select">
+                  <option value="one">This is option one</option>
+                  <option value="two">And this is option two</option>
+                </select>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </fieldset>
+    </form>
+  </section>
+
+</body>
+</html>
