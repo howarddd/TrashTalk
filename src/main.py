@@ -1,5 +1,6 @@
 import os
 import urllib
+from trashtalk import handlers
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -13,62 +14,42 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 ##
-# Main App
+# App
 ##
 
 class Home(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            sign_out_url = users.create_logout_url(self.request.uri)
-            template_values = {
-                'sign_out_url': sign_out_url,
-                'url_text': 'Sign Out',
-            }
-
+            auth_url = users.create_logout_url(self.request.uri)
+            auth_text = 'Sign Out'
         else:
-            sign_in_url = users.create_login_url(self.request.uri)
-            template_values = {
-                'sign_in_url': sign_in_url,
-                'url_text': 'Sign In',
-            }
+            auth_url = users.create_login_url(self.request.uri)
+            auth_text = 'Sign In'
+
+        template_values = {
+            'auth_url': auth_url,
+            'auth_text': auth_text,
+        }
 
         template = JINJA_ENVIRONMENT.get_template('./templates/index.html')
         self.response.write(template.render(template_values))
-
-
-class SignIn(webapp2.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        if user:
-            sign_out_url = users.create_logout_url(self.request.uri)
-            template_values = {
-                'sign_out_url': sign_out_url,
-                'url_text': 'Sign Out',
-            }
-            template = JINJA_ENVIRONMENT.get_template('./templates/signin.html')
-            self.response.write(template.render(template_values))
-
-        else:
-            sign_in_url = users.create_login_url(self.request.uri)
-            self.redirect(sign_in_url)
-
 
 
 class Schedule(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            sign_out_url = users.create_logout_url(self.request.uri)
-            template_values = {
-                'sign_out_url': sign_out_url,
-            }
-
+            auth_url = users.create_logout_url(self.request.uri)
+            auth_text = 'Sign Out'
         else:
-            sign_in_url = users.create_login_url(self.request.uri)
-            template_values = {
-                'sign_in_url': sign_in_url,
-            }
+            auth_url = users.create_login_url(self.request.uri)
+            auth_text = 'Sign In'
+
+        template_values = {
+            'auth_url': auth_url,
+            'auth_text': auth_text,
+        }
 
         template = JINJA_ENVIRONMENT.get_template('./templates/schedule.html')
         self.response.write(template.render(template_values))
@@ -76,7 +57,6 @@ class Schedule(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', Home),
-    ('/signin', SignIn),
     ('/event', handlers.EventHandler),
     ('/schedule', Schedule),
 ], debug=True)

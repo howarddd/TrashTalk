@@ -9,7 +9,7 @@
 <body>
   <header class="flex soft-double soft-quad--sides flex-align--center">
     <h2 class="flex--1"><a href="#">Trash Talk</a></h2>
-    <button class="button">Sign In</button>
+    <a class="button" href="{{ auth_url|safe }}">{{ auth_text }}</a>
   </header>
   <section class="text--center banner">
     <h1 class="alpha">Trash Talk</h1>
