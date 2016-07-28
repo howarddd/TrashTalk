@@ -11,7 +11,7 @@ handlers:
 #  static_dir: bootstrap
 
 - url: /.*
-  script: main.app
+  script: trashtalk.main.app
 # [END handlers]
 
 # [START libraries]
