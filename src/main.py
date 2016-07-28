@@ -4,6 +4,8 @@ import urllib
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
+from trashtalk import handlers
+
 import jinja2
 import webapp2
 
@@ -55,4 +57,5 @@ class SignIn(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', Home),
     ('/signin', SignIn),
+    ('/event', handlers.EventHandler),
 ], debug=True)
