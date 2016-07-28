@@ -4,6 +4,17 @@ import json
 from google.appengine.ext import ndb
 from google.appengine.api import users
 from trashtalk import models
+from trashtalk import geo_handler
+
+
+def address_to_latlong(street, zip, town, state):
+  addr_str = '{street} {town} {state}, {zip}'.format(
+    street=street,
+    town=town,
+    zip=zip,
+    state=state
+  )
+  return geo_handler.get_lat_long(addr_str)
 
 
 class EventHandler(webapp2.RequestHandler):
@@ -53,9 +64,12 @@ class EventHandler(webapp2.RequestHandler):
       address = models.Address(
         street=address_street, zip=address_zip, town=address_town, state=address_town
       )
-    location = None
     if has_exact_location:
       location = ndb.GeoPt(latitude, longitude)
+    else:
+      lat, long = address_to_latlong(address_street, address_zip, address_town, address_state)
+      location = ndb.GeoPt(lat, long)
+
     new_event = models.Event(
       name=name, description=description, category=category, creator=event_creator,
       address=address, location=location
