@@ -1,9 +1,18 @@
 from google.appengine.ext import ndb
 
 
-class User(ndb.Model):
-  identity = ndb.StringProperty(indexed=False)
-  email = ndb.StringProperty(indexed=False)
+class EventCreator(ndb.Model):
+  identity = ndb.StringProperty()
+  email = ndb.StringProperty()
+  seeclickfix_username = ndb.StringProperty(required=True)
+  seeclickfix_password = ndb.StringProperty(required=True)  # sorry Kyle
+
+
+class Address(ndb.Model):
+  street = ndb.StringProperty()
+  zip = ndb.StringProperty()
+  town = ndb.StringProperty()
+  state = ndb.StringProperty()
 
 
 class Event(ndb.Model):
@@ -13,14 +22,13 @@ class Event(ndb.Model):
     required=True,
     choices=['meeting', 'cleanup']
   )
-  creator = ndb.StructuredProperty(User)
+  creator = ndb.StructuredProperty(EventCreator)
 
   created_at = ndb.DateTimeProperty(auto_now_add=True)
   updated_at = ndb.DateTimeProperty(auto_now=True)
 
-  address = ndb.StringProperty()  # human readable location, optional
-
-
+  address = ndb.StructuredProperty(Address)
+  location = ndb.GeoPtProperty()  # lat/long
 
 
 
