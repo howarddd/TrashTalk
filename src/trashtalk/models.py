@@ -18,17 +18,22 @@ class Address(ndb.Model):
 class Event(ndb.Model):
   name = ndb.StringProperty(required=True)
   description = ndb.StringProperty()  # TODO: make this required?
+  summary = ndb.StringProperty()
   category = ndb.StringProperty(
     required=True,
     choices=['meeting', 'cleanup']
   )
   creator = ndb.StructuredProperty(EventCreator)
 
+  scf_issue_id = ndb.StringProperty()
+  scheduled_date = ndb.DateTimeProperty()
+
   created_at = ndb.DateTimeProperty(auto_now_add=True)
   updated_at = ndb.DateTimeProperty(auto_now=True)
 
   address = ndb.StructuredProperty(Address)
   location = ndb.GeoPtProperty()  # lat/long
+
 
 
 

@@ -21,80 +21,15 @@ Contributors Agree with these terms.
 
 <html>
 	<head>
-		<title>Sign In - Trash Talk - Oakland</title>
+		<title>Sign Out - Trash Talk - Oakland</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="TrashTalk-Oakland" content=liaison between: Oakland's Department of Public Works and the Oakland Adopt-A Volunteer Program" />
-		<!--[if lte IE 8]>
-		<script src="frontend/js/html5shiv.js"></script><![endif]-->
-		<script src="frontend/js/jquery.min.js"></script>
-		<script src="frontend/js/skel.min.js"></script>
-		<script src="frontend/js/skel-layers.min.js"></script>
-		<script src="frontend/js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="frontend/css/style.css" />
-			<link rel="stylesheet" href="frontend/css/style-xlarge.css" />
-		</noscript>
 	</head>
 	<body id="top">
-		<a href="{{ sign_in_url|safe }}">Sign In</a>
 
-		<!-- Header -->
-			<header id="header" class="skel-layers-fixed">
-				<h1><a href="#">Sign In - Trash Talk - Oakland</a></h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="#" class="button special">Contact TTO</a></li>
-					</ul>
-				</nav>
-			</header>
-			
-		<!-- Footer -->
-			<footer id="footer">
-				<div class="container">
-					<div class="row double">
-						<div class="6u">
-							<div class="row collapse-at-2">
-								<div class="6u">
-									<h3>Resources</h3>
-									<ul class="alt">
-										<li><a href="#">Plan A</a></li>
-										<li><a href="#">Plan B</a></li>
-										<li><a href="#">PlanEtTu</a></li>
-										<li><a href="#">Noplanopolis</a></li>
-									</ul>
-								</div>
-								<div class="6u">
-									<h3>And more</h3>
-									<ul class="alt">
-										<li><a href="#">IF necessary</a></li>
-										<li><a href="#">IF unnecessary</a></li>
-										<li><a href="#">IF sufficient</a></li>
-										<li><a href="#">IF insufficient</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="6u">
-							<h2>More stuff at the bottom</h2>
-							<p>A trail of true cities </p>
-							<ul class="icons">
-								<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-								<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
-							</ul>
-						</div>
-					</div>
-					<ul class="copyright">
-						<li>&copy; Trash Talk - Oakland. Some rights reserved.</li>
-						<li>Template courtesy of <a href="http://templated.co">TEMPLATED</a></li>
-                        			<li>&copy; Oakland Sunrise Panorama banner photo courtesy of <a href="https://www.flickr.com/photos/demond_henderson/3823705426">Henderson Images</a>. Some rights reserved</li>
-					</ul>
-				</div>
-			</footer>
+		<h1><a href="#">Trash Talk - Oakland</a></h1>
+		<a href="{{ auth_url|safe }}">{{ url_text }}</a>
+
 	</body>
 </html>
 {% endautoescape %}
