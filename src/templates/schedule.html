@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% autoescape true %}
 <html>
 <head>
   <title></title>
@@ -13,26 +14,38 @@
 
   <section class="soft-quad">
     <h1 class="push--bottom">Schedule a Cleanup</h1>
-    <form class="flex flex-align--center border--all soft-double push--bottom">
+    <form class="flex flex-align--center border--all soft-double push--bottom" action="/event" method="post">
       <fieldset>
         <ol class="form-fields">
-          <li class="form-field__item">
+          <!-- <li class="form-field__item">
             <label class="label">Type</label>
             <select name="zoo" id="zoo" class="select">
               <option value="cleanup">Cleanup</option>
               <option value="meeting">Meeting</option>
               <option value="other">Other</option>
             </select>
+          </li> -->
+          <li class="form-field__item">
+            <label class="label">Email</label>
+            <input type="text" class="text-input width-150" name="user_email">
           </li>
           <li class="form-field__item">
-            <label class="label">Fixed-width Input</label>
-            <input type="text" class="text-input width-150">
+            <label class="label">Street Address</label>
+            <input type="text" class="text-input width-250" name="address_street">
           </li>
           <li class="form-field__item">
-            <label class="label">Fixed-width Input</label>
-            <input type="text" class="text-input width-250">
+            <label class="label">City</label>
+            <input type="text" class="text-input width-250" name="address_town">
           </li>
           <li class="form-field__item">
+            <label class="label">Zip Code</label>
+            <input type="text" class="text-input width-250" name="address_zip">
+          </li>
+          <li class="form-field__item">
+            <label class="label">State</label>
+            <input type="text" class="text-input width-250" name="address_state">
+          </li>
+          <!-- <li class="form-field__item">
             <div class="grid">
               <div class="grid__cell">
                 <label class="label">Date</label>
@@ -46,11 +59,13 @@
                 </select>
               </div>
             </div>
-          </li>
+          </li> -->
         </ol>
       </fieldset>
+      <button>Send</button>
     </form>
   </section>
 
 </body>
 </html>
+{% endautoescape %}
