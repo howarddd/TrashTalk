@@ -26,8 +26,8 @@ class EventHandler(webapp2.RequestHandler):
     address_zip = self.request.get('address_zip')
     address_town = self.request.get('address_town')
     address_state = self.request.get('address_state')
-    latitude = self.request.get('location_latitude')
-    longitude = self.request.get('location_longitude')
+    latitude = self.request.get('latitude')
+    longitude = self.request.get('longitude')
 
     required = [user_email, scf_username, scf_password, name, category]
     if not all(required):
@@ -39,6 +39,9 @@ class EventHandler(webapp2.RequestHandler):
       raise webapp2.exc.HTTPBadRequest('missing exact location or full address')
 
     user = users.get_current_user()
+    if not user:
+      raise webapp2.exc.HTTPUnauthorized('no user is authenticated')
+
     event_creator = models.EventCreator(
       identity=user.user_id(),
       email=user.email(),
