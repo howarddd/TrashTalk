@@ -4,8 +4,6 @@ import urllib
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
-from trashtalk import handlers
-
 import jinja2
 import webapp2
 
@@ -25,12 +23,14 @@ class Home(webapp2.RequestHandler):
             sign_out_url = users.create_logout_url(self.request.uri)
             template_values = {
                 'sign_out_url': sign_out_url,
+                'url_text': 'Sign Out',
             }
 
         else:
             sign_in_url = users.create_login_url(self.request.uri)
             template_values = {
                 'sign_in_url': sign_in_url,
+                'url_text': 'Sign In',
             }
 
         template = JINJA_ENVIRONMENT.get_template('./templates/index.html')
@@ -44,6 +44,7 @@ class SignIn(webapp2.RequestHandler):
             sign_out_url = users.create_logout_url(self.request.uri)
             template_values = {
                 'sign_out_url': sign_out_url,
+                'url_text': 'Sign Out',
             }
             template = JINJA_ENVIRONMENT.get_template('./templates/signin.html')
             self.response.write(template.render(template_values))
