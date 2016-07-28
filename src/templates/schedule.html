@@ -14,17 +14,27 @@
 
   <section class="soft-quad">
     <h1 class="push--bottom">Schedule a Cleanup</h1>
-    <form class="flex flex-align--center border--all soft-double push--bottom" action="/event" method="post">
-      <fieldset>
+    <form class="border--all soft-double push--bottom" action="/event" method="post">
+      <ol class="form-fields">
+        <li class="form-field__item">
+          <label class="label">Type</label>
+          <select name="category" id="zoo" class="select">
+            <option value="cleanup">Cleanup</option>
+            <option value="meeting">Meeting</option>
+            <option value="other">Other</option>
+          </select>
+        </li>
+        <li class="form-field__item">
+          <label class="label">Name</label>
+          <input type="text" class="text-input" name="name">
+        </li>
+        <li class="form-field__item">
+          <label class="label">Description</label>
+          <input type="text" class="text-input" name="name">
+        </li>
+      </ol>
+      <div class="flex">
         <ol class="form-fields">
-          <li class="form-field__item">
-            <label class="label">Type</label>
-            <select name="category" id="zoo" class="select">
-              <option value="cleanup">Cleanup</option>
-              <option value="meeting">Meeting</option>
-              <option value="other">Other</option>
-            </select>
-          </li>
           <li class="form-field__item">
             <label class="label">Name</label>
             <input type="text" class="text-input" name="name">
@@ -41,6 +51,8 @@
             <label class="label">Email</label>
             <input type="text" class="text-input" name="user_email">
           </li>
+        </ol>
+        <ol class="form-fields">
           <li class="form-field__item">
             <label class="label">Street Address</label>
             <input type="text" class="text-input" name="address_street">
@@ -58,8 +70,8 @@
             <input type="text" class="text-input" name="address_state">
           </li>
         </ol>
-      </fieldset>
-      <button>Send</button>
+      </div>
+      <button class="button">Send</button>
     </form>
   </section>
 
