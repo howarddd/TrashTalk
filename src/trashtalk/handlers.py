@@ -1,5 +1,6 @@
 import webapp2
 import json
+import datetime
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
@@ -17,22 +18,39 @@ def address_to_latlong(street, zip, town, state):
   return geo_handler.get_lat_long(addr_str)
 
 
+def date_serializer(obj):
+  """JSON serializer for objects not serializable by default json code"""
+
+  if isinstance(obj, datetime.datetime):
+    serial = obj.isoformat()
+    return serial
+  elif isinstance(obj, ndb.GeoPt):
+    serial = (obj.lat, obj.lon)
+    return serial
+  print obj
+  raise TypeError("Type not serializable")
+
+
 class EventHandler(webapp2.RequestHandler):
 
   def get(self):
     events = models.Event.query().fetch()
-    self.response.write(json.dumps(events))
+    self.response.write(
+      json.dumps(
+        [e.to_dict() for e in events],
+        default=date_serializer
+      )
+    )
 
 
   def post(self):
     user_email = self.request.get('user_email')
     scf_username = self.request.get('scf_username')
     scf_password = self.request.get('scf_password')
-
     name = self.request.get('name')
     description = self.request.get('description')
     category = self.request.get('category')
-
+    scheduled_date = self.request.get('scheduled_date')  # TODO: parse this and make it required
     address_street = self.request.get('address_street')
     address_zip = self.request.get('address_zip')
     address_town = self.request.get('address_town')

@@ -24,11 +24,15 @@ class Event(ndb.Model):
   )
   creator = ndb.StructuredProperty(EventCreator)
 
+  scf_issue_id = ndb.StringProperty()
+  scheduled_date = ndb.DateTimeProperty()
+
   created_at = ndb.DateTimeProperty(auto_now_add=True)
   updated_at = ndb.DateTimeProperty(auto_now=True)
 
   address = ndb.StructuredProperty(Address)
   location = ndb.GeoPtProperty()  # lat/long
+
 
 
 
