@@ -29,6 +29,9 @@ def date_and_location_serializer(obj):
     return serial
   raise TypeError("Type not serializable")
 
+def build_description(description, scheduled_date, url):
+  """To Do:  Build description to past to SCF which will include the user's description of the event, the scehduled date, and a URL to link back to the TrashTalk event"""
+  pass
 
 class EventHandler(webapp2.RequestHandler):
 
@@ -51,7 +54,6 @@ class EventHandler(webapp2.RequestHandler):
     summary = self.request.get('summary')
     category = self.request.get('category')
     scheduled_date = self.request.get('scheduled_date')  # TODO: parse this and make it required
-    summary = self.request.get('summary')
     address_street = self.request.get('address_street')
     address_zip = self.request.get('address_zip')
     address_town = self.request.get('address_town')
@@ -93,7 +95,7 @@ class EventHandler(webapp2.RequestHandler):
 
     new_event = models.Event(
       name=name, description=description, category=category, creator=event_creator,
-      address=address, location=location, summary=summary
+      address=address, location=location, summary=summary, scf_issue_id=scf_issue_id
     )
     new_event.put()
 
