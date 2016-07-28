@@ -27,7 +27,6 @@ def date_serializer(obj):
   elif isinstance(obj, ndb.GeoPt):
     serial = (obj.lat, obj.lon)
     return serial
-  print obj
   raise TypeError("Type not serializable")
 
 
@@ -58,19 +57,19 @@ class EventHandler(webapp2.RequestHandler):
     latitude = self.request.get('latitude')
     longitude = self.request.get('longitude')
 
+    # Validate the input
     required = [user_email, scf_username, scf_password, name, category]
     if not all(required):
       raise webapp2.exc.HTTPBadRequest('missing required fields')
-
     has_exact_location = latitude and longitude
     has_full_address = address_state and address_street and address_zip and address_town
     if not (has_exact_location or has_full_address):
       raise webapp2.exc.HTTPBadRequest('missing exact location or full address')
-
     user = users.get_current_user()
     if not user:
       raise webapp2.exc.HTTPUnauthorized('no user is authenticated')
 
+    # Create the datastore Event and put it
     event_creator = models.EventCreator(
       identity=user.user_id(),
       email=user.email(),
@@ -85,8 +84,8 @@ class EventHandler(webapp2.RequestHandler):
     if has_exact_location:
       location = ndb.GeoPt(latitude, longitude)
     else:
-      lat, long = address_to_latlong(address_street, address_zip, address_town, address_state)
-      location = ndb.GeoPt(lat, long)
+      latitutde, longitude = address_to_latlong(address_street, address_zip, address_town, address_state)
+      location = ndb.GeoPt(latitude, longitude)
 
     new_event = models.Event(
       name=name, description=description, category=category, creator=event_creator,
