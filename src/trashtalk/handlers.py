@@ -61,8 +61,6 @@ class EventHandler(webapp2.RequestHandler):
     latitude = self.request.get('latitude')
     longitude = self.request.get('longitude')
 
-    # TODO: add time to scheduled date so we get date time
-
     # Validate the input
     required = [user_email, scf_username, scf_password, name, category, summary]
     if not all(required):
