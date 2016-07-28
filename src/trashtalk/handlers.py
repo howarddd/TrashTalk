@@ -5,16 +5,16 @@ from google.appengine.ext import ndb
 from google.appengine.api import users
 from trashtalk import models
 from trashtalk import geo_handler
+from trashtalk import see_click_fix
 
-
-def address_to_latlong(street, zip, town, state):
+def address_to_string(street, zip, town, state):
   addr_str = '{street} {town} {state}, {zip}'.format(
     street=street,
     town=town,
     zip=zip,
     state=state
   )
-  return geo_handler.get_lat_long(addr_str)
+  return addr_str
 
 
 class EventHandler(webapp2.RequestHandler):
@@ -31,6 +31,7 @@ class EventHandler(webapp2.RequestHandler):
 
     name = self.request.get('name')
     description = self.request.get('description')
+    summary = self.request.get('summary')
     category = self.request.get('category')
 
     address_street = self.request.get('address_street')
@@ -60,6 +61,7 @@ class EventHandler(webapp2.RequestHandler):
       seeclickfix_password=scf_password
     )
     address = None
+    address_string = address_to_string(address_street, address_zip, address_town, address_state)
     if has_full_address:
       address = models.Address(
         street=address_street, zip=address_zip, town=address_town, state=address_town
@@ -67,8 +69,11 @@ class EventHandler(webapp2.RequestHandler):
     if has_exact_location:
       location = ndb.GeoPt(latitude, longitude)
     else:
-      lat, long = address_to_latlong(address_street, address_zip, address_town, address_state)
-      location = ndb.GeoPt(lat, long)
+      latitude, longitude = geo_handler.get_lat_long(address_string)
+      location = ndb.GeoPt(latitude, longitude)
+
+    scf_issue = see_click_fix.create_issue(latitude, longitude, address_string, summary, description, scf_username, scf_password)
+    scf_issue_id = scf_issue['id']
 
     new_event = models.Event(
       name=name, description=description, category=category, creator=event_creator,
